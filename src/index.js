@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' // eslint-disable-line import/no-extraneous-dependencies
+import openPopup from './popup'
 
-function getQueryVariable(variable) {
-  const query = window.location.search.substring(1)
+function getQueryVariable(context, variable) {
+  const query = context.location.search.substring(1)
   const vars = query.split('&')
   const code = vars
     .map(i => {
@@ -27,54 +28,119 @@ function getQueryVariable(variable) {
 class InstagramLogin extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      hover: false
+    }
     this.onBtnClick = this.onBtnClick.bind(this)
   }
 
   componentDidMount() {
-    if (this.props.implicitAuth) {
-      const matches = window.location.hash.match(/=(.*)/)
-      if (matches) {
-        this.props.onSuccess(matches[1])
-      }
-    } else if (window.location.search.includes('code')) {
-      this.props.onSuccess(getQueryVariable('code'))
-    } else if (window.location.search.includes('error')) {
-      this.props.onFailure({
-        error: getQueryVariable('error'),
-        error_reason: getQueryVariable('error_reason'),
-        error_description: getQueryVariable('error_description')
-      })
-    }
+    this.checkInstagramAuthentication(window)
   }
 
   onBtnClick() {
     const { clientId, scope } = this.props
     const redirectUri = this.props.redirectUri || window.location.href
     const responseType = this.props.implicitAuth ? 'token' : 'code'
-    window.location.href = `https://api.instagram.com/oauth/authorize/?app_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}`
+    const url = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`
+    if (this.props.useRedirect) {
+      window.location.href = url
+    } else {
+      this.oAuthSignIn({ url })
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  onCredentialsChanged(popup, resolve, reject) {
+    if (!resolve) {
+      return new Promise((res, rej) => this.onCredentialsChanged(popup, res, rej))
+    }
+    let isFinished
+    try {
+      isFinished = this.checkInstagramAuthentication(popup)
+    } catch (err) {
+      // An exception is thrown when we try to access to another website's url
+    }
+
+    if (isFinished) {
+      popup.close()
+    } else if (popup.closed) {
+      this.props.onFailure({
+        error: 'closed',
+        error_reason: 'oauth_canceled',
+        error_description: 'User canceled the authentication'
+      })
+    } else {
+      setTimeout(() => this.onCredentialsChanged(popup, resolve, reject), 0)
+    }
+  }
+
+  oAuthSignIn({ url, tab = false }) {
+    const name = tab ? '_blank' : 'instagram'
+    const { width, height } = this.props
+    const popup = openPopup({ url, name, width, height })
+    this.onCredentialsChanged(popup)
+  }
+
+  checkInstagramAuthentication(context) {
+    if (this.props.implicitAuth) {
+      const matches = context.location.hash.match(/=(.*)/)
+      if (matches) {
+        this.props.onSuccess(matches[1])
+
+        return true
+      }
+    } else if (context.location.search.includes('code')) {
+      this.props.onSuccess(getQueryVariable(context, 'code'))
+
+      return true
+    } else if (context.location.search.includes('error')) {
+      this.props.onFailure({
+        error: getQueryVariable(context, 'error'),
+        error_reason: getQueryVariable(context, 'error_reason'),
+        error_description: getQueryVariable(context, 'error_description')
+      })
+
+      return true
+    }
+
+    return false
   }
 
   render() {
     const style = {
-      display: 'inline-block',
-      background: 'linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%)',
-      color: '#fff',
-      width: 200,
-      paddingTop: 10,
-      paddingBottom: 10,
-      borderRadius: 2,
-      border: '1px solid transparent',
-      fontSize: 16,
-      fontWeight: 'bold',
-      fontFamily: '"proxima-nova", "Helvetica Neue", Arial, Helvetica, sans-serif'
+      display: 'block',
+      border: 0,
+      borderRadius: 3,
+      boxShadow: 'rgba(0, 0, 0, 0.5) 0 1px 2px',
+      color: '#ffffff',
+      cursor: 'pointer',
+      fontSize: '19px',
+      overflow: 'hidden',
+      padding: '10px',
+      userSelect: 'none',
+      background: 'linear-gradient(to right, rgb(236, 146, 35) 0%, rgb(177, 42, 160) 50%, rgb(105, 14, 224) 100%)',
+      hover: {
+        background: 'linear-gradient(to right, rgb(214, 146, 60) 0%, rgb(160, 11, 143) 50%, rgb(56, 10, 115) 100%)'
+      }
     }
-    const { cssClass, buttonText, children, tag, type } = this.props
+    const { hover } = this.state
+    const { cssClass, buttonText, children, tag, type, render } = this.props
+    if (render) {
+      return render({ onClick: this.onBtnClick })
+    }
     const instagramLoginButton = React.createElement(
       tag,
       {
         className: cssClass,
         onClick: this.onBtnClick,
-        style: cssClass ? {} : style,
+        onMouseEnter: () => {
+          this.setState({ hover: true })
+        },
+        onMouseLeave: () => {
+          this.setState({ hover: false })
+        },
+        style: cssClass ? {} : { ...style, ...(hover ? style.hover : null) },
         type
       },
       children || buttonText
@@ -85,10 +151,13 @@ class InstagramLogin extends Component {
 }
 InstagramLogin.defaultProps = {
   buttonText: 'Login with Instagram',
-  scope: 'basic',
+  scope: 'instagram_graph_user_media',
   tag: 'button',
   type: 'button',
-  implicitAuth: false
+  implicitAuth: false,
+  useRedirect: false,
+  width: 400,
+  height: 800
 }
 
 InstagramLogin.propTypes = {
@@ -102,7 +171,11 @@ InstagramLogin.propTypes = {
   tag: PropTypes.string,
   redirectUri: PropTypes.string,
   type: PropTypes.string,
-  implicitAuth: PropTypes.bool
+  implicitAuth: PropTypes.bool,
+  useRedirect: PropTypes.bool,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  render: PropTypes.func
 }
 
 export default InstagramLogin

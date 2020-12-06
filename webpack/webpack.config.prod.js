@@ -1,52 +1,57 @@
-const path = require('path')
-const webpack = require('webpack')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const uglifyConf = require('./uglify.json')
+const path = require("path");
+const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const uglifyConf = require("./uglify.json");
 
-const fileRoot = process.cwd()
+const fileRoot = process.cwd();
 
 module.exports = {
-  entry: ['./src/index.js'],
+  entry: ["./src/index.js"],
   output: {
-    path: path.join(fileRoot, 'dist'),
-    filename: 'instagram-login.js',
-    libraryTarget: 'umd',
-    library: 'InstagramLogin'
+    path: path.join(fileRoot, "dist"),
+    filename: "instagram-login.js",
+    libraryTarget: "umd",
+    library: "InstagramLogin",
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             cacheDirectory: true,
             babelrc: false,
-            presets: ['react', ['es2015', { modules: false }]],
-            plugins: ['transform-react-remove-prop-types', 'transform-react-constant-elements', 'transform-react-inline-elements']
-          }
-        }
-      }
-    ]
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: [
+              "transform-react-remove-prop-types",
+              "transform-react-constant-elements",
+              "transform-react-inline-elements",
+              "@babel/plugin-transform-destructuring",
+            ],
+          },
+        },
+      },
+    ],
   },
   externals: {
-    react: 'react',
-    'react-dom': 'ReactDOM'
+    react: "react",
+    "react-dom": "ReactDOM",
   },
   resolve: {
-    extensions: ['.js']
+    extensions: [".js"],
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
+      "process.env": {
+        NODE_ENV: JSON.stringify("production"),
+      },
     }),
-    new UglifyJsPlugin({ uglifyConf }),
+    // new UglifyJsPlugin({ uglifyConf }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false
+      debug: false,
     }),
-    new webpack.optimize.AggressiveMergingPlugin()
-  ]
-}
+    new webpack.optimize.AggressiveMergingPlugin(),
+  ],
+};
