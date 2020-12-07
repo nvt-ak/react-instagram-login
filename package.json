@@ -1,6 +1,6 @@
 {
   "name": "@amraneze/react-instagram-login",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An Instagram Login Component for React",
   "main": "dist/instagram-login.js",
   "scripts": {

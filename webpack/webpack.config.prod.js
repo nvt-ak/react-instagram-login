@@ -12,6 +12,7 @@ module.exports = {
     filename: "instagram-login.js",
     libraryTarget: "umd",
     library: "InstagramLogin",
+    globalObject: "this",
   },
   module: {
     rules: [
