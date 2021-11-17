@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2021-11-17
+
+### Added
+
+- Use react hooks
+- Refactor the code
+- Remove unused dependencies
+- Use typescript instead of PropsType
+- Fix issue [#1](https://github.com/Amraneze/react-instagram-login/issues/1) related to Instagram scopes
+
 ## [2.0.1] - 2020-12-08
 
 ### Added

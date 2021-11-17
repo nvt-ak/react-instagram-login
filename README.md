@@ -3,22 +3,21 @@
 # React Instagram Login
 
 > An Instagram oAUth Sign-in / Log-in Component for React
-
 ## Install
 
 ```
-npm install react-instagram-login
+npm install @amraneze/react-instagram-login
+```
 
+```
+yarn add @amraneze/react-instagram-login
 ```
 
 ## How to use
-
 ### With default button
-
 ```js
-import React from "react";
-import ReactDOM from "react-dom";
-import InstagramLogin from "react-instagram-login";
+import ReactDOM from 'react-dom';
+import InstagramLogin from '@amraneze/react-instagram-login';
 
 const responseInstagram = (response) => {
   console.log(response);
@@ -26,7 +25,7 @@ const responseInstagram = (response) => {
 
 ReactDOM.render(
   <InstagramLogin
-    clientId="5fd2f11482844c5eba963747a5f34556"
+    clientId="CLIENT_ID"
     buttonText="Login"
     onSuccess={responseInstagram}
     onFailure={responseInstagram}
@@ -35,41 +34,15 @@ ReactDOM.render(
 );
 ```
 
-### With a custom button
-
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import InstagramLogin from 'react-instagram-login';
-
-const responseInstagram = (response) => {
-  console.log(response);
-}
-
-ReactDOM.render(
-  <InstagramLogin
-    clientId="5fd2f11482844c5eba963747a5f34556"
-    buttonText="Login"
-    onSuccess={responseInstagram}
-    onFailure={responseInstagram}
-    render={({onClick} => (<button onClick={onClick}>Login with Instagram</button>))}
-  />,
-  document.getElementById('instagramButton')
-);
-```
-
 ## onSuccess callback
 
 ### Displaying OAuth using a popup
-
 > Note: The redirectUri needs to be the same url as the current url.
 
 ### Displaying OAuth using a redirection
 
 If you want to use redirection you should change the prop `useRedirect` to true.
-
 Callback will return a code for use on your server to get a full access_token.
-
 If `implicitAuth` is set to `true` it will return the full access_token directly.
 
 ## onFailure callback
@@ -99,7 +72,6 @@ Callback will return an error object.
 | useRedirect  | boolean  |        false         |
 |    width     |  number  |         400          |
 |    height    |  number  |         800          |
-|    render    | function |          -           |
 
 Instagram API Docs: https://www.instagram.com/developer/
 
@@ -107,7 +79,7 @@ You can now also pass child components such as icons into the button component.
 
 ```js
 <InstagramLogin
-  clientId="5fd2f11482844c5eba963747a5f34556"
+  clientId="CLIENT_ID"
   onSuccess={responseInstagram}
   onFailure={responseInstagram}
 >
@@ -117,33 +89,33 @@ You can now also pass child components such as icons into the button component.
 ```
 
 ## Dev Server
-
 ```
-npm run start
-
+yarn dev
 ```
 
 ## Run Tests
-
 ```
-npm run test:watch
-
+yarn test
 ```
 
 ## Production Bundle
 
 ```
-npm run bundle
+yarn build
 ```
 
 #### TODO
 
-- [ ] Use Hooks
 - [ ] Fix the test cases
-- [ ] Update dependencies
-- [ ] Create a babel Conf
-- [ ] Use prettier + Husky
-- [ ] Improve and refactor the code
+- [ ] Add templates for PR and Issues
 - [ ] Use Google, Facebook, Linkedin ... in this project
+
+#### Done
+
+- [x] Use Hooks
+- [x] Update dependencies
+- [x] Create a babel Conf
+- [x] Use prettier + Husky
+- [x] Improve and refactor the code
 
 ### Follow me on Twitter: [@Amraneze](https://twitter.com/amraneze)
