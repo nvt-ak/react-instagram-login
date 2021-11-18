@@ -19,7 +19,8 @@ webpack
 .husky
 .vscode
 demo
-dist
+dis
+.github
 .eslintrc.js
 .babelrc
 .eslintignore
