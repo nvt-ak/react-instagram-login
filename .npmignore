@@ -19,7 +19,7 @@ webpack
 .husky
 .vscode
 demo
-dis
+dist
 .github
 .eslintrc.js
 .babelrc
@@ -28,3 +28,4 @@ dis
 .prettierrc
 tsconfig.json
 tsconfig.paths.json
+*.ignore
