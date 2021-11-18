@@ -39,7 +39,7 @@ export function InstagramLogin({
         useRedirect: false,
         implicitAuth: false,
         buttonText: 'Login with Instagram',
-        scope: 'user_profile,user_media',
+        scope: 'user_profile',
     };
     const [hover, setHover] = useState(false);
 

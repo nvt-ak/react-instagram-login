@@ -17,7 +17,7 @@ yarn add @amraneze/react-instagram-login
 ### With default button
 ```js
 import ReactDOM from 'react-dom';
-import InstagramLogin from '@amraneze/react-instagram-login';
+import { InstagramLogin } from '@amraneze/react-instagram-login';
 
 const responseInstagram = (response) => {
   console.log(response);
@@ -33,6 +33,8 @@ ReactDOM.render(
   document.getElementById("instagramButton")
 );
 ```
+
+>Note: Here is a [sandbox](https://codesandbox.io/s/amraneze-react-instagram-login-gggjr) to play around.
 
 ## onSuccess callback
 
@@ -60,7 +62,7 @@ Callback will return an error object.
 |    params    |  value   |    default value     |
 | :----------: | :------: | :------------------: |
 |   clientId   |  string  |       REQUIRED       |
-|    scope     |  string  |        basic         |
+|    scope     |  string  |     user_profile     |
 |  onSuccess   | function |       REQUIRED       |
 |  onFailure   | function |       REQUIRED       |
 | redirectUri  |  string  |          -           |
