@@ -1,8 +1,8 @@
 {
   "name": "@amraneze/react-instagram-login",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "An Instagram Login Component for React",
-  "main": "instagram-login.js",
+  "main": "index.js",
   "scripts": {
     "dev": "webpack serve",
     "build": "set NODE_ENV=production&& webpack --config webpack/webpack.config.prod.js",

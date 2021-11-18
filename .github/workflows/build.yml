@@ -29,9 +29,9 @@ jobs:
       - name: Upload a build artifact to master
         if: ${{ contains(github.event.head_commit.message, 'bump version') }}
         run: |
-          cp dist/instagram-login.js instagram-login.js
+          cp dist/instagram-login.js index.js
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --local user.name "${GITHUB_ACTOR}"
-          git add instagram-login.js
-          git commit -m 'ci: publish instagram-login.js'
+          git add index.js
+          git commit -m 'ci: publish index.js'
           git push
