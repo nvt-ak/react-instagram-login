@@ -13,3 +13,17 @@ node_modules/
 .module-cache
 npm-debug.log
 .c9
+test
+src
+webpack
+.husky
+.vscode
+demo
+dist
+.eslintrc.js
+.babelrc
+.eslintignore
+.prettierignore
+.prettierrc
+tsconfig.json
+tsconfig.paths.json
