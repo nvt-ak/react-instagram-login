@@ -29,9 +29,9 @@ jobs:
       - name: Upload a build artifact to master
         if: success()
         run: |
-          cp dist/instagram-login.js index.js
+          cp dist/instagram-login.js instagram-login.js
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --local user.name "${GITHUB_ACTOR}"
-          git add index.js
-          git commit -m '[CI] Publish index.js'
+          git add instagram-login.js
+          git commit -m 'ci: publish index.js'
           git push
