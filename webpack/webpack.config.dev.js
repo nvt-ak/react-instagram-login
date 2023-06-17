@@ -3,4 +3,5 @@ const commonConfig = require("./webpack.config.common");
 
 module.exports = merge(commonConfig, {
     devtool: "eval",
+    mode: "development",
 });

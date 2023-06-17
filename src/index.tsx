@@ -28,9 +28,11 @@ export function InstagramLogin({
     redirectUri,
     onFailure,
     onSuccess,
+    buttonText = 'Login with Instagram',
+    scope = 'user_profile',
     ...rest
 }: Props): ReactNode {
-    const { tag, type, width, height, scope, implicitAuth, useRedirect, buttonText } = {
+    const { tag, type, width, height, implicitAuth, useRedirect } = {
         ...rest,
         width: 400,
         height: 800,
@@ -38,8 +40,6 @@ export function InstagramLogin({
         type: 'button',
         useRedirect: false,
         implicitAuth: false,
-        buttonText: 'Login with Instagram',
-        scope: 'user_profile',
     };
     const [hover, setHover] = useState(false);
 

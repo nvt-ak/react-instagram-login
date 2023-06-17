@@ -6,21 +6,12 @@
   <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone@7.16.4/babel.js"></script>      
   <script>
-    Babel.registerPreset("my-preset", {
-      presets: [
-        [Babel.availablePresets["es2017"], { modules: false }],
-        [Babel.availablePresets["react"]]
-        
-      ],
-      plugins: [
-        [Babel.availablePlugins["transform-modules-umd"]]
-      ]        
-    });
-  </script>    
-  <script type="text/babel" src="index.js" data-presets="my-preset"></script>
-  <script type="text/javascript" src="../dist/instagram-login.js"></script>
+    // Added to bypass the issue of undefined react while requiring it
+    window.react = React;
+  </script>
+    
+  <script src="index.js"></script>
   <body>
       <p>Testing instgram button.</p>
       <div id="instagram-login"></div>
