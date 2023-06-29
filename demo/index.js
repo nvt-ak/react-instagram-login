@@ -1,15 +1,13 @@
 const ReactDOM = require('react-dom');
 const { InstagramLogin } = require('../dist/instagram-login')
 
-console.log({ test: InstagramLogin })
-
 function responseInstagram(response) {
   console.warn(response);
 };
 
 const App = () => {
-  const clientId = 'CLIENT_ID'
-  const redirectUrl = 'REDIRECT_URL' // You can use ngrok to expose your localhost
+  const clientId = '963715064870711'
+  const redirectUrl = 'https://b65a-2a01-cb00-213-2900-df96-8cea-285b-6163.ngrok-free.app/' // You can use ngrok to expose your localhost
 
   return <div>
     <InstagramLogin
@@ -17,7 +15,7 @@ const App = () => {
       onSuccess={responseInstagram}
       onFailure={responseInstagram}
       redirectUri={redirectUrl}
-      scope='user_profile,user_media,publish_video,pages_show_list,instagram_basic,instagram_content_publish,pages_read_engagement'
+      scope='user_profile,user_media,publish_video,instagram_basic'
     >
       <i className="fab fa-instagram"></i>
       <span> Login with Instagram</span>

@@ -1,4 +1,9 @@
-[![npm version](https://badge.fury.io/js/%40amraneze%2Freact-instagram-login.svg)](https://badge.fury.io/js/%40amraneze%2Freact-instagram-login)
+![npm version](https://img.shields.io/npm/v/%40amraneze%2Freact-instagram-login)
+![npm](https://img.shields.io/npm/dw/%40amraneze%2Freact-instagram-login)
+![npm bundle size](https://img.shields.io/bundlephobia/min/%40amraneze%2Freact-instagram-login)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40amraneze%2Freact-instagram-login)
+![GitHub release (release name instead of tag name)](https://img.shields.io/github/v/release/amraneze/react-instagram-login)
+[![build](https://github.com/Amraneze/react-instagram-login/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Amraneze/react-instagram-login/actions/workflows/build.yml)
 
 # React Instagram Login
 

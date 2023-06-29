@@ -25,22 +25,18 @@ export function InstagramLogin({
     clientId,
     cssClass,
     children,
-    redirectUri,
     onFailure,
     onSuccess,
+    redirectUri,
+    width = 400,
+    height = 800,
+    tag = 'button',
+    type = 'button',
+    useRedirect = false,
+    implicitAuth = false,
+    scope = 'user_profile,user_media',
     buttonText = 'Login with Instagram',
-    scope = 'user_profile',
-    ...rest
 }: Props): ReactNode {
-    const { tag, type, width, height, implicitAuth, useRedirect } = {
-        ...rest,
-        width: 400,
-        height: 800,
-        tag: 'button',
-        type: 'button',
-        useRedirect: false,
-        implicitAuth: false,
-    };
     const [hover, setHover] = useState(false);
 
     const checkInstagramAuthentication = useCallback(
@@ -111,7 +107,7 @@ export function InstagramLogin({
     const onButtonClicked = () => {
         const _redirectUri = redirectUri || window.location.href;
         const responseType = implicitAuth ? 'token' : 'code';
-        const url = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${_redirectUri}&response_type=${responseType}&scope=${scope}`;
+        const url = `https://www.instagram.com/oauth/authorize?client_id=${clientId}&response_type=${responseType}&scope=${scope}&redirect_uri=${_redirectUri}`;
         if (useRedirect) {
             window.location.href = url;
         } else {
