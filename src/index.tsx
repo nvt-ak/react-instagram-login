@@ -17,6 +17,7 @@ interface Props {
     redirectUri: string;
     useRedirect: boolean;
     implicitAuth: boolean;
+    forcedAuth?: boolean;
     onFailure: (error: Error) => void;
     onSuccess: (response: string | null) => void;
 }
@@ -34,6 +35,7 @@ export function InstagramLogin({
     type = 'button',
     useRedirect = false,
     implicitAuth = false,
+    forcedAuth = false,
     scope = 'user_profile,user_media',
     buttonText = 'Login with Instagram',
 }: Props): ReactNode {
@@ -107,7 +109,12 @@ export function InstagramLogin({
     const onButtonClicked = () => {
         const _redirectUri = redirectUri || window.location.href;
         const responseType = implicitAuth ? 'token' : 'code';
-        const url = `https://www.instagram.com/oauth/authorize?client_id=${clientId}&response_type=${responseType}&scope=${scope}&redirect_uri=${_redirectUri}`;
+        let url = `https://www.instagram.com/oauth/authorize?client_id=${clientId}&response_type=${responseType}&scope=${scope}&redirect_uri=${_redirectUri}`;
+
+        if (forcedAuth) {
+            url += '&force_authentication=1';
+        }
+
         if (useRedirect) {
             window.location.href = url;
         } else {
